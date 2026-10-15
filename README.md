@@ -35,7 +35,7 @@ mvn -q test-compile exec:java       # regenerate contexts/*/AGENTS.md from the m
 | Branch | What the "agent" did | What catches it |
 |---|---|---|
 | `main` | nothing, all green | |
-| `demo/agent-refund-bug` | implemented partial refunds, checks each refund against the price but forgets earlier refunds. All agreed examples still pass. | `TicketRefundProperties`: jqwik shrinks to a tiny counterexample (something like price 0.02 EUR, refunds 0.01 and 0.02) |
+| `demo/agent-refund-bug` | implemented partial refunds, checks each refund against the price but forgets earlier refunds. All agreed examples still pass. | `TicketRefundProperties`: jqwik shrinks to a tiny counterexample (typically price 0.01 EUR, refunds 0.01 and 0.01) |
 | `demo/agent-says-booking` | added a `BookingRefundService` | `GlossaryLintTest`, with the reason and the decision record from the modeling session |
 | `demo/agent-crosses-boundary` | let access-control read the `Ticket` aggregate directly instead of the published event | `ContextMapRulesTest`, the failing test names the CML line it violates |
 
