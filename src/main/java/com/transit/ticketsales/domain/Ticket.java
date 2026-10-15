@@ -54,9 +54,8 @@ public class Ticket {
         if (!amount.isPositive()) {
             throw new RefundRejected("A refund must be positive, was " + amount);
         }
-        if (refunded().plus(amount).isGreaterThan(price)) {
-            throw new RefundRejected("Refunds would exceed the price paid: already refunded "
-                    + refunded() + ", requested " + amount + ", price " + price);
+        if (amount.isGreaterThan(price)) {
+            throw new RefundRejected("A refund cannot exceed the price paid: requested " + amount + ", price " + price);
         }
         refunds.add(amount);
         events.add(new TicketRefunded(id, amount.cents(), isRefunded()));
