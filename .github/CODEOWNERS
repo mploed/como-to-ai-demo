@@ -1,0 +1,23 @@
+# Who has to approve what. Team handles are placeholders for this demo.
+# Agents can propose changes everywhere they are allowed to write, merging needs these owners.
+
+# Agreed examples: the domain experts of the context decide
+/contexts/ticket-sales/scenarios/        @transit/fare-product-experts
+/contexts/ticket-sales/glossary.yaml     @transit/fare-product-experts @transit/fare-product-team
+/contexts/ticket-sales/decisions/        @transit/fare-product-experts @transit/fare-product-team
+
+# Published language of ticket-sales (OHS/PL): downstream owners must agree
+/src/main/java/com/transit/ticketsales/api/   @transit/fare-product-team @transit/gate-team @transit/customer-care-team
+
+# The context map itself: every context owner whose relationships change
+/model/                                  @transit/fare-product-team @transit/gate-team @transit/customer-care-team
+
+# The checks: engineers own the verification, agents never weaken it alone
+/src/test/java/com/transit/architecture/ @transit/fare-product-team
+/src/test/java/com/transit/language/     @transit/fare-product-team
+/src/test/java/com/transit/tooling/      @transit/fare-product-team
+
+# Code of each context
+/src/main/java/com/transit/ticketsales/    @transit/fare-product-team
+/src/main/java/com/transit/accesscontrol/  @transit/gate-team
+/src/main/java/com/transit/customercare/   @transit/customer-care-team

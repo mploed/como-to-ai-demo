@@ -4,8 +4,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-/** Regenerates contexts/<context>/AGENTS.md for every context that has a glossary. */
+/**
+ * Regenerates contexts/<context>/AGENTS.md for every context that has a glossary,
+ * and .claude/settings.json (agent permissions) for the context this repository's agents work in.
+ */
 public final class GenerateAgentInstructions {
+
+    /** The context whose team runs agents in this repository. */
+    public static final String AGENT_CONTEXT = "TicketSales";
 
     private GenerateAgentInstructions() {
     }
@@ -21,5 +27,9 @@ public final class GenerateAgentInstructions {
                 System.out.println("Generated " + target);
             }
         }
+        Path settings = root.resolve(".claude/settings.json");
+        Files.createDirectories(settings.getParent());
+        Files.writeString(settings, AgentPermissions.generate(AGENT_CONTEXT, model));
+        System.out.println("Generated " + settings);
     }
 }

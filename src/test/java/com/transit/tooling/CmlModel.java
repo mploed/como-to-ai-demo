@@ -146,8 +146,12 @@ public record CmlModel(List<String> contexts,
         return relationships.stream().filter(r -> r.involves(context)).toList();
     }
 
-    /** Contexts in the map without any relationship: Separate Ways, no dependency allowed. */
-    public List<List<String>> separateWays() {
+    /**
+     * Pairs of contexts with no relationship in the map. Closed world convention of this repository:
+     * not on the map means no dependency, until the map says otherwise. This is a policy for agents,
+     * not DDD semantics. Separate Ways is a deliberate decision and deserves its own decision record.
+     */
+    public List<List<String>> unrelatedPairs() {
         List<List<String>> pairs = new ArrayList<>();
         for (int i = 0; i < contexts.size(); i++) {
             for (int j = i + 1; j < contexts.size(); j++) {

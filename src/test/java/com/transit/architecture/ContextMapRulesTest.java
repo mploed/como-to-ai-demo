@@ -59,11 +59,12 @@ class ContextMapRulesTest {
             }
         }
 
-        for (List<String> pair : MODEL.separateWays()) {
+        for (List<String> pair : MODEL.unrelatedPairs()) {
             String a = CmlModel.packageOf(pair.get(0));
             String b = CmlModel.packageOf(pair.get(1));
-            String line = pair.get(0) + " and " + pair.get(1) + " have no relationship in the context map";
-            tests.add(DynamicTest.dynamicTest("Separate Ways: " + line, () -> {
+            String line = pair.get(0) + " and " + pair.get(1) + " are not related on the context map,"
+                    + " so no dependency until the map says otherwise";
+            tests.add(DynamicTest.dynamicTest("Not on the map: " + pair.get(0) + " and " + pair.get(1), () -> {
                 noClasses().that().resideInAPackage(a + "..").should().dependOnClassesThat().resideInAPackage(b + "..")
                         .because(line).check(CLASSES);
                 noClasses().that().resideInAPackage(b + "..").should().dependOnClassesThat().resideInAPackage(a + "..")

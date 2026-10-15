@@ -13,7 +13,7 @@ import java.util.List;
  * A fare product a customer has purchased and paid for.
  *
  * Invariant: the sum of refunds never exceeds the price paid.
- * (Whether a refunded Ticket still grants access is NOT an invariant of this aggregate,
+ * (Whether a fully refunded Ticket still grants access is NOT an invariant of this aggregate,
  * it is a policy across contexts, see TicketRefunded and access-control.)
  */
 @AggregateRoot

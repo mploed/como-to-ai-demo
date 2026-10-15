@@ -24,7 +24,7 @@ public final class AgentInstructions {
 
         StringBuilder md = new StringBuilder();
         md.append("<!-- GENERATED from model/transit.cml, contexts/").append(folder).append("/glossary.yaml and boundary.yaml.\n")
-          .append("     Do not edit by hand. Regenerate with: mvn -q test-compile exec:java -->\n\n");
+          .append("     Do not edit by hand. Regenerate with: mvn -q test-compile exec:java@agents -->\n\n");
         md.append("# Agent instructions: ").append(context).append("\n\n");
         md.append(bc.vision()).append("\n\n");
         md.append("- Subdomain: ").append(bc.implementsSubdomain())
@@ -55,19 +55,21 @@ public final class AgentInstructions {
         for (CmlModel.Relationship r : model.relationshipsOf(context)) {
             md.append("- `").append(r.line()).append("`: ").append(policy(context, r)).append("\n");
         }
-        for (List<String> pair : model.separateWays()) {
+        for (List<String> pair : model.unrelatedPairs()) {
             if (pair.contains(context)) {
                 String other = pair.get(0).equals(context) ? pair.get(1) : pair.get(0);
-                md.append("- No relationship to ").append(other)
-                  .append(" (Separate Ways): no dependency on `").append(CmlModel.packageOf(other)).append("`. [build]\n");
+                md.append("- ").append(other).append(" is not on the map next to you: no dependency on `")
+                  .append(CmlModel.packageOf(other)).append("` until the map says otherwise. [build]\n");
             }
         }
 
         md.append("\n## How to work here\n\n")
-          .append("- First name the Bounded Context of the request. If the request is ambiguous (\"ticket\"), ask before you do anything else.\n")
+          .append("- Run the prompt lint on the request first: `mvn -q test-compile exec:java@prompt-lint -Dexec.args=\"<request>\"`. Ask its questions back before you build anything.\n")
+          .append("- Name the Bounded Context of the request. If the request is ambiguous (\"ticket\"), ask before you do anything else.\n")
           .append("- Examples first: draft scenarios and invariants for one slice and wait until the domain expert agrees.\n")
           .append("- Agreed scenarios in `contexts/").append(folder).append("/scenarios` are read only. Propose new ones, never edit agreed ones.\n")
           .append("- Unknown term or uncovered case: do not invent. Add a question to `contexts/").append(folder).append("/open-questions.md` and continue with the rest.\n")
+          .append("- Your tool permissions come from the same model: `.claude/settings.json` (generated).\n")
           .append("- The build checks these rules: `GlossaryLintTest`, `ContextMapRulesTest`, `TicketRefundProperties`, `RefundScenarioTest`.\n");
         return md.toString();
     }

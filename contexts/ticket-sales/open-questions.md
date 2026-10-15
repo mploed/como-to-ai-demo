@@ -4,4 +4,4 @@ Agents and people add questions here instead of guessing. This list is the agend
 
 - [ ] Monthly passes: same refund rules as single tickets, or a new slice?
 - [ ] Refund after validation: never, or within a grace period?
-- [ ] Offline gates: how long may a refunded Ticket still grant access?
+- [ ] Offline gates: how long may a fully refunded Ticket still grant access?

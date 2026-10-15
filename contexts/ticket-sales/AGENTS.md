@@ -1,5 +1,5 @@
 <!-- GENERATED from model/transit.cml, contexts/ticket-sales/glossary.yaml and boundary.yaml.
-     Do not edit by hand. Regenerate with: mvn -q test-compile exec:java -->
+     Do not edit by hand. Regenerate with: mvn -q test-compile exec:java@agents -->
 
 # Agent instructions: TicketSales
 
@@ -33,8 +33,10 @@ Sells fare products, handles refunds
 
 ## How to work here
 
-- First name the Bounded Context of the request. If the request is ambiguous ("ticket"), ask before you do anything else.
+- Run the prompt lint on the request first: `mvn -q test-compile exec:java@prompt-lint -Dexec.args="<request>"`. Ask its questions back before you build anything.
+- Name the Bounded Context of the request. If the request is ambiguous ("ticket"), ask before you do anything else.
 - Examples first: draft scenarios and invariants for one slice and wait until the domain expert agrees.
 - Agreed scenarios in `contexts/ticket-sales/scenarios` are read only. Propose new ones, never edit agreed ones.
 - Unknown term or uncovered case: do not invent. Add a question to `contexts/ticket-sales/open-questions.md` and continue with the rest.
+- Your tool permissions come from the same model: `.claude/settings.json` (generated).
 - The build checks these rules: `GlossaryLintTest`, `ContextMapRulesTest`, `TicketRefundProperties`, `RefundScenarioTest`.

@@ -5,7 +5,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 /**
- * Policy across contexts: a refunded Ticket no longer grants access.
+ * Policy across contexts: a fully refunded Ticket no longer grants access.
+ * In process event for the demo. A real system needs reliable delivery and an agreed delay (open question).
  * Uses only the published language of ticket-sales.
  */
 @Component

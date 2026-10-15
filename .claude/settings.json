@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "deny": [
+      "Edit(/contexts/ticket-sales/scenarios/**)",
+      "Edit(/src/main/java/com/transit/accesscontrol/**)",
+      "Edit(/contexts/access-control/**)",
+      "Edit(/src/main/java/com/transit/customercare/**)",
+      "Edit(/contexts/customer-care/**)",
+      "Edit(/src/main/java/com/transit/paymentprovider/**)",
+      "Edit(/contexts/payment-provider/**)"
+    ],
+    "ask": [
+      "Edit(/src/main/java/com/transit/ticketsales/api/**)",
+      "Edit(/model/**)",
+      "Edit(/contexts/ticket-sales/glossary.yaml)",
+      "Edit(/contexts/ticket-sales/boundary.yaml)",
+      "Edit(/contexts/ticket-sales/decisions/**)",
+      "Edit(/src/test/java/com/transit/architecture/**)",
+      "Edit(/src/test/java/com/transit/language/**)",
+      "Edit(/src/test/java/com/transit/tooling/**)"
+    ]
+  }
+}
