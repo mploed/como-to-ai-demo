@@ -1,0 +1,35 @@
+# Ubiquitous Language of the ticket-sales Bounded Context.
+# Harvested from modeling sessions. Owner decides, changes go through pull requests.
+context: ticket-sales
+package: com.transit.ticketsales
+owner: Fare Product Team
+
+terms:
+  - term: Ticket
+    definition: A fare product a customer has purchased and paid for.
+    not_to_be_confused_with:
+      - term: Validation
+        context: access-control
+      - term: Support Case
+        context: customer-care
+    avoid:
+      - word: Booking
+        use: Ticket
+        reason: booking means a seat reservation in long distance rail
+        decision: decisions/0007-ticket-not-booking.md
+      - word: Order
+        use: Ticket
+        reason: an order is the checkout process, not the product the customer holds
+        decision: decisions/0007-ticket-not-booking.md
+      - word: Voucher
+        use: Ticket
+        reason: vouchers are a marketing instrument with their own rules
+        decision: decisions/0007-ticket-not-booking.md
+
+  - term: Refund
+    definition: Money paid back to the customer for a Ticket. A Ticket can be refunded partially, several times.
+    avoid:
+      - word: Cancellation
+        use: Refund
+        reason: nothing gets cancelled, the Ticket stays and gets the state Refunded
+        decision: decisions/0007-ticket-not-booking.md

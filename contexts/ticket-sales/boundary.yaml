@@ -1,0 +1,6 @@
+# What CML cannot express yet (see the talk: "Agents need a few more words in it").
+context: ticket-sales
+not_responsible_for:
+  - Gate validation (access-control)
+  - Support cases (customer-care)
+  - Payment processing (payment-provider, only via the anticorruption layer)

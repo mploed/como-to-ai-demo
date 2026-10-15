@@ -1,0 +1,86 @@
+/*
+ * Strategic and tactical model of the transit ticketing example.
+ * Source of truth for boundaries and relationships. Edited a line at a time,
+ * in the same sessions where the examples are written. Not an upfront model.
+ */
+
+Domain Transit {
+  Subdomain FareSales {
+    type = CORE_DOMAIN
+    domainVisionStatement = "Selling fare products and handling refunds is where we differentiate."
+  }
+  Subdomain GateAccess {
+    type = SUPPORTING_DOMAIN
+  }
+  Subdomain CustomerService {
+    type = SUPPORTING_DOMAIN
+  }
+  Subdomain Payments {
+    type = GENERIC_SUBDOMAIN
+  }
+}
+
+ContextMap TransitTicketing {
+  type SYSTEM_LANDSCAPE
+  state TO_BE
+
+  contains TicketSales, AccessControl, CustomerCare, PaymentProvider
+
+  TicketSales [U,OHS,PL] -> [D] AccessControl {
+    implementationTechnology = "Domain events (published language: ticketsales.api)"
+    exposedAggregates = Tickets
+  }
+
+  TicketSales [U,OHS,PL] -> [D,CF] CustomerCare {
+    exposedAggregates = Tickets
+  }
+
+  TicketSales [D,ACL] <- [U,OHS] PaymentProvider {
+    implementationTechnology = "Payout API"
+  }
+}
+
+BoundedContext TicketSales implements FareSales {
+  type = FEATURE
+  domainVisionStatement = "Sells fare products, handles refunds"
+  responsibilities = "Selling fare products", "Refunds"
+  implementationTechnology = "Java 21, Spring Boot"
+
+  Aggregate Tickets {
+    Entity Ticket {
+      aggregateRoot
+      - TicketId ticketId
+      String zone
+      - Money price
+      boolean validated
+    }
+    ValueObject TicketId {
+      String value
+    }
+    ValueObject Money {
+      long cents
+    }
+    DomainEvent TicketRefunded {
+      - TicketId ticketId
+      - Money amount
+      boolean fullyRefunded
+    }
+  }
+}
+
+BoundedContext AccessControl implements GateAccess {
+  type = FEATURE
+  domainVisionStatement = "Decides at the gate whether a ticket grants access"
+  responsibilities = "Gate validation"
+}
+
+BoundedContext CustomerCare implements CustomerService {
+  type = FEATURE
+  domainVisionStatement = "Handles support cases of passengers"
+  responsibilities = "Support cases"
+}
+
+BoundedContext PaymentProvider implements Payments {
+  type = SYSTEM
+  domainVisionStatement = "External payment service provider, we only use its published payout API"
+}
