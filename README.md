@@ -1,4 +1,4 @@
-# ticketing-ai-ready
+# como-to-ai-demo
 
 Demo repository for the talk **From Collaborative Modeling to AI-Ready Domain Knowledge** (KanDDDinsky 2026).
 
